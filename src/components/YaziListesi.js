@@ -1,6 +1,6 @@
 
 import React,{useEffect, useState} from 'react'
-import axios from 'axios'
+import { api } from '../api'
 import {Link} from "react-router-dom"
 
 const  YaziListesi=(props)=> {
@@ -8,7 +8,7 @@ const  YaziListesi=(props)=> {
     const [yaziListesi,setYaziListesi]=useState([])
 
     useEffect(() => {
-        axios.get("https://react-yazi-yorum.herokuapp.com/posts")
+        api().get("/posts")
         .then(response =>
           {
            setYaziListesi(response.data)
@@ -17,6 +17,7 @@ const  YaziListesi=(props)=> {
     
 
   return (
+    <React.Fragment>
     <div className="ui relaxed divided list">
     {yaziListesi.map(yazi=>{
     return(
@@ -32,6 +33,10 @@ const  YaziListesi=(props)=> {
         })}
        
        </div>
+       <Link className="ui blue button"
+       to={`/yaziekle`} > Yazi Ekle
+       </Link>
+       </React.Fragment>
   )
 }
 
