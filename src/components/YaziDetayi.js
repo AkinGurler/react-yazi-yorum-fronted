@@ -14,7 +14,7 @@ const YaziDetayi = () => {
     const dispatch = useDispatch()
 
     
-    const push = useHistory;
+    const history = useHistory;
 
 
     const handleCommentSubmit = (event,comment) => {
