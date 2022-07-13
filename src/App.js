@@ -20,6 +20,7 @@ export default function App() {
         <Route path="/yaziekle" component={YaziEkle} />
         <Route path="/posts/:id/edit" component={YaziDuzenle} />
         
+        
   
          
         </div>

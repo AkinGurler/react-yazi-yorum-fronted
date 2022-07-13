@@ -1,17 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
+
+const YORUM_BASLANGIC = {
+  display_name: "",
+  body: ""
+}
 
 const YorumFormu=(props)=> {
+  const [comment, setComment] = useState(YORUM_BASLANGIC)
 
-    const comment=props.comment
+  const handleOnChange = (event) => {
+    setComment({ ...comment, [event.target.name]: event.target.value });
+  };
+   
     const handleCommentSubmit=props.handleCommentSubmit
-    const handleOnChange=props.handleOnChange
+    
   return (
     <div>
          <h3>Yorum Yaz</h3>
         <form className="ui form"
-        onSubmit={
-            handleCommentSubmit
-        }
+        onSubmit={(event) => {
+          handleCommentSubmit(event, comment);
+          setComment(YORUM_BASLANGIC);
+        }}
         >
         <div className="ui mini icon input">
              <input 

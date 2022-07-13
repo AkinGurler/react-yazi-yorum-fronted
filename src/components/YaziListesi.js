@@ -2,17 +2,21 @@
 import React,{useEffect, useState} from 'react'
 import { api } from '../api'
 import {Link} from "react-router-dom"
+import { connect } from 'react-redux'
+import {useSelector,useDispatch} from "react-redux"
+import { yaziListesiGetir } from '../actions'
 
 const  YaziListesi=(props)=> {
 
-    const [yaziListesi,setYaziListesi]=useState([])
+  
+    
+    const yaziListesi= useSelector((state)=>state.yaziListesi)
+    const dispatch=useDispatch()
+    console.log(yaziListesi)
+    
 
     useEffect(() => {
-        api().get("/posts")
-        .then(response =>
-          {
-           setYaziListesi(response.data)
-          })
+      dispatch(yaziListesiGetir())
       }, [])
     
 
@@ -39,5 +43,7 @@ const  YaziListesi=(props)=> {
        </React.Fragment>
   )
 }
+
+
 
 export default YaziListesi

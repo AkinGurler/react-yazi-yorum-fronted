@@ -1,40 +1,40 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios"
-import { Link } from "react-router-dom"
+import { Link, useHistory, useParams } from "react-router-dom"
 import { withRouter } from "react-router-dom"
 import { api } from '../api'
+import { useSelector, useDispatch } from "react-redux"
+import { yaziEdit, yaziEkle } from '../actions'
+
 
 const YaziFormu = (props) => {
+    const {id}=useParams();
+    const {push}=useHistory();
     const [yazi, setYazi] = useState(
         { title: "", content: "" })
     const [hata, setHata] = useState("")
+    const dispatch=useDispatch()
 
     const onInputChange = (event) => setYazi({
         ...yazi, [event.target.name]: event.target.value
     })
 
-    console.log("Yazi Formu yazi",yazi)
+    
     const onFormSubmit = (event) => {
         event.preventDefault()
         setHata("")
 
         if(props.yazi?.title){
-            api().put(`/posts/${props.match.params.id}`,yazi)
-            .then((response=>{
-                console.log(response)
-                props.history.push(`/posts/${props.match.params.id}`) // işlemden sonra gidilecek yer
-            }))
-            .catch(error => {
-                setHata("Baslik ve Yazi içeriği Zorunludur")
-            })
+            dispatch(yaziEdit(id,yazi,push))
         }else{
-            api().post("/posts", yazi)
+            dispatch(yaziEkle(yazi,push))
+            /* api().post("/posts", yazi)
             .then(response => {
-                props.history.push("/")
+               push("/")
             })
             .catch(error => {
                 setHata("Baslik ve Yazi içeriği Zorunludur")
-            })
+            }) */
 
         }
 
@@ -44,7 +44,8 @@ const YaziFormu = (props) => {
 
     useEffect(()=>{
         if(props.yazi?.title && props.yazi?.content ) 
-            setYazi(props.yazi)
+            setYazi({title:props.yazi.title,
+                content:props.yazi.content})
 
     },[props.yazi])
 
