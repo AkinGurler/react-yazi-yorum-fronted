@@ -17,6 +17,7 @@ import PostList from './components/PostList'
 import AddPostForm from './components/AddPostForm'
 import { useDispatch } from 'react-redux'
 import { fetchPosts } from "./actions/post"
+import PostDetails from './components/PostDetails'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   container: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(6),
   }
 
 }))
@@ -56,22 +57,22 @@ const App = () => {
   return (
     <div>
       <CssBaseline />
-      <Container maxWidth="lg">
+      <Container maxWidth="lg">{/* //area for posts */}
         <AppBar position="static" color="inherit" elevation={0}>
           <Toolbar>
             <IconButton edge="start" className={classes.container}
               color="inherit" />
             <Typography
-              variant="h6"
+              variant="h4"
               color="secondary"
               className={classes.title}
             >
-              <a href="http://localhost:3000/posts">blogify</a>
+              <a href="https://blogcity-frontend.herokuapp.com/posts">Blogcity</a>
             </Typography>
             <Button color="primary"
-              variant="outlined" startIcon={<PenIcon />}
+              variant="contained" startIcon={<PenIcon />}
               onClick={handleOpen}>
-              Yeni Yazı
+              New Post
             </Button>
           </Toolbar>
         </AppBar>
@@ -81,7 +82,7 @@ const App = () => {
             <Router>
               <Switch>
                 <Route exact path="/posts" component={PostList} />
-                <Redirect from='/' to='/posts' />
+                <Route exact path="/posts/:id" component={PostDetails} />
 
               </Switch>
 
